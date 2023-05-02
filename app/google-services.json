@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "20538694190",
+    "project_id": "pothole-detector-android",
+    "storage_bucket": "pothole-detector-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:20538694190:android:2fbdb971a71ed570309dbf",
+        "android_client_info": {
+          "package_name": "com.pdetector.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "20538694190-gpj31st69ol8386isi6dpk4rouhmfggd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYbFLBiZx1GCV7GwArM7aNHQ3h6Q6AnoY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "20538694190-gpj31st69ol8386isi6dpk4rouhmfggd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
