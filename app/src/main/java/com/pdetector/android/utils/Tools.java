@@ -81,7 +81,6 @@ public class Tools {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        ((Activity) context).finishAffinity();
                     }
                 });
         AlertDialog alertDialog = builder.create();

@@ -238,7 +238,7 @@
                    android:layout_marginLeft="20dp"
                    app:cardBackgroundColor="@color/color2"
                    app:cardElevation="0dp"
-                   android:id="@+id/main_about_us">
+                   android:id="@+id/main_check_sheet">
 
                    <LinearLayout
                        android:layout_width="wrap_content"
@@ -285,7 +285,7 @@
                    app:cardCornerRadius="15dp"
                    app:cardBackgroundColor="@color/color2"
                    app:cardElevation="0dp"
-                   android:id="@+id/main_rate_app">
+                   android:id="@+id/main_about_app">
 
                    <LinearLayout
                        android:layout_width="wrap_content"
@@ -298,11 +298,11 @@
                        <ImageView
                            android:layout_width="30dp"
                            android:layout_height="30dp"
-                           android:src="@drawable/ic_star"/>
+                           android:src="@drawable/ic_about"/>
                        <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:text="Rate App"
+                           android:text="About App"
                            android:layout_marginLeft="10dp"
                            android:textColor="@color/black"
                            android:textSize="16sp"

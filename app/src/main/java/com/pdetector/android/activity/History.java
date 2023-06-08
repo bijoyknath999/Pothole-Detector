@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -57,8 +60,17 @@ public class History extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        if (!Tools.isInternetConnected())
+        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        // Initialize network info
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        // get connection status
+        boolean isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
+
+        if (!isConnected)
+        {
             Tools.ShowNoInternetDialog(this);
+        }
+
 
         PotholeDatabase.addValueEventListener(new ValueEventListener() {
             @Override

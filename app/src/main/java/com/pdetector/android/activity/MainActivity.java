@@ -14,6 +14,8 @@ import android.hardware.SensorManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements PermissionUtil.Pe
     private double latitude, longitude;
     private TextView PotholeText;
     private ImageButton PotholeBtn;
-    private CardView HistoryBtn, SettingsBtn, AllPotholeBtn, AboutUsBtn, RateAppBtn, ShareAppBtn;
+    private CardView HistoryBtn, SettingsBtn, AllPotholeBtn, CheckSheetBtn, AboutAppBtn, ShareAppBtn;
     private LinearLayout MainLayout;
     private LocationManager locationManager;
     Sensor mySensor;
@@ -113,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements PermissionUtil.Pe
         HistoryBtn = findViewById(R.id.main_history);
         SettingsBtn = findViewById(R.id.main_settings);
         AllPotholeBtn = findViewById(R.id.main_all_pothole);
-        AboutUsBtn = findViewById(R.id.main_about_us);
-        RateAppBtn = findViewById(R.id.main_rate_app);
+        CheckSheetBtn = findViewById(R.id.main_check_sheet);
+        AboutAppBtn = findViewById(R.id.main_about_app);
         ShareAppBtn = findViewById(R.id.main_share_app);
         MainLayout = findViewById(R.id.main_layout);
 
@@ -154,24 +156,17 @@ public class MainActivity extends AppCompatActivity implements PermissionUtil.Pe
 
 
         PotholeBtn.setOnClickListener(v -> {
-            if (!Tools.isInternetConnected())
-            {
-                Tools.ShowNoInternetDialog(this);
+            if(!start) {
+                PotholeBtn.setImageDrawable(getDrawable(R.drawable.ic_off));
+                PotholeText.setText("Turn Off Pothole Detector");
+                Tools.showSnackbar(this,MainLayout,"Pothole Detector Running","Okay");
+                start = true;
             }
-            else
-            {
-                if(!start) {
-                    PotholeBtn.setImageDrawable(getDrawable(R.drawable.ic_off));
-                    PotholeText.setText("Turn Off Pothole Detector");
-                    Tools.showSnackbar(this,MainLayout,"Pothole Detector Running","Okay");
-                    start = true;
-                }
-                else {
-                    PotholeBtn.setImageDrawable(getDrawable(R.drawable.ic_on));
-                    PotholeText.setText("Turn On Pothole Detector");
-                    Tools.showSnackbar(this,MainLayout,"Pothole Detector Stopped Running","Okay");
-                    start = false;
-                }
+            else {
+                PotholeBtn.setImageDrawable(getDrawable(R.drawable.ic_on));
+                PotholeText.setText("Turn On Pothole Detector");
+                Tools.showSnackbar(this,MainLayout,"Pothole Detector Stopped Running","Okay");
+                start = false;
             }
         });
 
@@ -179,16 +174,24 @@ public class MainActivity extends AppCompatActivity implements PermissionUtil.Pe
         SettingsBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, com.pdetector.android.activity.Settings.class)));
         AllPotholeBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,MapsActivity.class)));
 
-        testExcel();
 
+        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        // Initialize network info
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        // get connection status
+        boolean isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
 
-        if (!Tools.isInternetConnected())
+        if (!isConnected)
         {
             Tools.ShowNoInternetDialog(this);
         }
 
-        AboutUsBtn.setOnClickListener(view -> {
+        CheckSheetBtn.setOnClickListener(view -> {
             ShowDialog2();
+        });
+
+        AboutAppBtn.setOnClickListener(view -> {
+            ShowDialog5();
         });
 
     }
@@ -649,6 +652,22 @@ public class MainActivity extends AppCompatActivity implements PermissionUtil.Pe
             }
         });
     }
+
+
+    private void ShowDialog5(){
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this,R.style.AlertDialogCustom);
+        View customLayout = getLayoutInflater().inflate(R.layout.custom_dialog6, null);
+        builder.setView(customLayout);
+        AppCompatButton okayBtn = customLayout.findViewById(R.id.custom_dialog6_okay);
+        AlertDialog alertDialog = builder.create();
+        okayBtn.setOnClickListener(v ->
+        {
+            alertDialog.dismiss();
+        });
+        alertDialog.show();
+    }
+
 
     private void storeDataExcel(String date, String time, String address, String typeOfHole, String latitude, String longitude, String intensity, String link)
     {
